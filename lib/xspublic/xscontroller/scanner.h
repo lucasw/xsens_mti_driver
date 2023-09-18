@@ -127,6 +127,7 @@ extern XsScanLogCallbackFunc gScanLogCallback;
 		{ \
 			std::ostringstream os; \
 			os << msg; \
+      std::cout << os.str() << std::endl; \
 			const XsString cbVal(os.str()); \
 			XsScannerNamespace::gScanLogCallback(&cbVal); \
 		} \

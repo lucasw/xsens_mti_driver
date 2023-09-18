@@ -184,11 +184,15 @@ bool XdaInterface::connectDevice()
 		ROS_INFO("Found port name parameter: %s", portName.c_str());
 		mtPort = XsPortInfo(portName, baudrate);
 		ROS_INFO("Scanning port %s ...", portName.c_str());
-		if (!XsScanner::scanPort(mtPort, baudrate))
+		if (!XsScanner::scanPort(mtPort, baudrate)) {
+      ROS_INFO("scanned port");
 			return handleError("No MTi device found. Verify port and baudrate.");
-		if (checkDeviceID && mtPort.deviceId().toString().c_str() != deviceId)
+    }
+    ROS_INFO_STREAM("found device " << mtPort.deviceId().toString());
+		if (checkDeviceID && mtPort.deviceId().toString().c_str() != deviceId) {
+      ROS_INFO("device mismatch");
 			return handleError("No MTi device found with matching device ID.");
-
+    }
 	}
 	else
 	{

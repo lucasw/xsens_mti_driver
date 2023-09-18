@@ -66,6 +66,7 @@
 #include "scanner.h"
 #include "enumerateusbdevices.h"
 
+#include <iostream>
 /*!	\class XsScanner
 	\brief Provides static functionality for scanning for Xsens devices.
 */
@@ -96,6 +97,8 @@ int XsScanner_scanPort_int(XsPortInfo* port, XsBaudRate baudrate, int singleScan
 		return 0;
 
 	Scanner::Accessor accessor;
+	LOGXSSCAN(__FUNCTION__ << " scan port " << port);
+  std::cout << "foo " << port << std::endl;
 	return accessor.scanner().xsScanPort(*port, baudrate, (uint32_t)singleScanTimeout, detectRs485 != 0) ? 1 : 0;
 }
 
