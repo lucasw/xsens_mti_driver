@@ -21,13 +21,18 @@ RUN apt-get upgrade -y
 
 RUN apt-get install -yqq git
 RUN apt-get install -yqq ros-noetic-catkin python3-catkin-tools ros-noetic-cmake-modules
-
-WORKDIR catkin_ws/src
-RUN pwd
-RUN git clone https://github.com/nobleo/xsens_mti_driver.git
-
 RUN apt-get install -yqq ros-noetic-tf2 ros-noetic-tf2-ros ros-noetic-diagnostic-updater
-WORKDIR ..
+
+WORKDIR $HOME/catkin_ws/src
+# RUN git clone https://github.com/lucasw/xsens_mti_driver.git --branck dockerfile_2004
+ADD . $HOME/catkin_ws/src/xsens_mti_driver/
+RUN find .
+WORKDIR $HOME/catkin_ws/src/xsens_mti_driver/lib/xspublic
+RUN find .
+RUN pwd
+# RUN make clean
+WORKDIR $HOME/catkin_ws
+
 RUN source /opt/ros/noetic/setup.bash && catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release -Wno-deprecated
 RUN source /opt/ros/noetic/setup.bash && catkin build
 
